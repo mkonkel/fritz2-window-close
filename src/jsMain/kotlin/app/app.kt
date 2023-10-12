@@ -2,17 +2,20 @@ package app
 
 import dev.fritz2.core.render
 import dev.fritz2.core.storeOf
-import model.Framework
-import model.name
+import kotlinx.browser.window
 
 fun main() {
-    val frameworkStore = storeOf(Framework("fritz2"))
-    val name = frameworkStore.map(Framework.name())
+    val closeButtonClicked = storeOf(false)
 
     render {
-        p {
-            +"This site uses: "
-            b { name.data.renderText() }
+        div {
+            button {
+                +"Close Window"
+                clicks handledBy closeButtonClicked.handle {
+                    window.close()
+                    true
+                }
+            }
         }
     }
 }
